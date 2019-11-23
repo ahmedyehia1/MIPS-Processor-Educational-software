@@ -1,0 +1,260 @@
+<html>
+    <head>
+            <title>MIPS</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="./style.css">
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        </head>
+    <body class="container-fluid">
+        <h1 class="text-center">MIPS processor</h1>
+        <div class="row">
+                <div class="side-bar justify-item-center">
+                    <div class="form-group">
+                        <label>Assembly code goes here</label>
+                        <textarea class="form-control" id="Assembly" rows="5" placeholder="ex: add $t0,$s2,$a0" spellcheck="false" autofocus></textarea>
+                        <div class="cycle">
+                        <label style="margin: 10px">time scale of cycle in ms</label>
+                        <input class="form-control" style="max-width: 100px;text-align: center;" id="scale" value="2000" placeholder="type time">
+                        </div>
+                        <div class="btn-group system-control">
+                            <button id="resume" class="btn btn-primary float-right disabled mt-4">Resume</button>
+                            <button id="stop" class="btn btn-primary float-right mt-4">Stop</button>
+                            <button id="run" class="btn btn-primary float-right mt-4">Run</button>
+                        </div>
+                    </div>
+                    <label class="badge badge-light" data-toggle="collapse" data-target="#machine-code" aria-expanded="false">
+                            machine code
+                    </label>
+                        <div class="btn-group mb-2">
+                            <button id="toBin" class="btn btn-primary active">binary</button>
+                            <button id="toHex" class="btn btn-primary">hex</button>
+                        </div>
+                                <ul class="list-group">
+                                    </ul>
+                </div>
+                <div class="ALUOp-content"></div>
+            <div class="bg-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="620" width="1100">
+                        //circle
+                        <circle class="R1 R2 R3 I1 I2 I3 I4 J1 J2" cx="380" cy="357" r="3"></circle>    
+                        <circle class="R1 R2 R3 I1 I2 I3 I4 J1 J2" cx="380" cy="388" r="3"></circle>    
+                        //pc
+                        <path class="pc" d="M 218 325 247 325 247 402 218 402 218 325"></path>
+                        <text class="instruction-memory-text" x="224" y="366" font-size="14px">PC</text>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 218 363 210 363 210 90 1024 90 1024 153 1010 153"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 247 363 266 363"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 256 363 256 124 305 124"></path>
+                    //instruction memory
+                        <path class="instruction-memory" d="M 266 350 355 350 355 454 266 454 z"></path>
+                        <text class="instruction-memory-text" x="280" y="430" font-size="14px">instruction</text>
+                        <text class="instruction-memory-text" x="288" y="440" font-size="14px">Memory</text>
+                        <text class="instruction-memory-text" x="302" y="400" font-size="10px">instruction</text>
+                        <text class="instruction-memory-text" x="314" y="410" font-size="10px">[31:0]</text>
+                        <text class="instruction-memory-text" x="274" y="366" font-size="12px">Address</text>
+                        //   
+                        <text class="instruction-text" x="393" y="252" font-size="12px">instruction[31:26]</text>
+                        <text class="instruction-text" x="400" y="352" font-size="12px">instruction[25:21]</text>
+                        <text class="instruction-text" x="400" y="382" font-size="12px">instruction[20:16]</text>
+                        <text class="instruction-text" x="400" y="434" font-size="12px">[15:11]</text>
+                        <text class="instruction-text" x="400" y="513" font-size="12px">instruction[15:0]</text>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 355 403 380 403 380 258 488 258"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 380 357 528 357"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 380 388 528 388"></path>
+                        <circle class="I1 I2 I3 I4" cx="423" cy="388" r="3"></circle>    
+                        <path class="I1 I2 I3 I4" d="M 423 388 423 410 448 410"></path>
+                        <circle class="R1 R2 R3 I1 I2 I3 I4 J1 J2" cx="380" cy="440" r="3"></circle>    
+                        <path class="R1 R2 R3" d="M 380 440 448 440"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 380 404 380 440 380 518"></path>
+                        <path class="I1 I2 I3 I4" d="M 380 518 564 518"></path>
+                        <path class="R1 R2 R3" d="M 380 518 380 614 788 614 788 434"></path>
+                        <path class="J1 J2" d="M 360 402 360 114 460 114"></path>
+                        <circle class="J1 J2" cx="360" cy="403" r="3"></circle>    
+                        <ellipse class="shift-left2" cx="482" cy="114" rx="22" ry="22" />
+                        <text class="shift-left2-text" x="473" y="112" font-size="10px">shift</text>
+                        <text class="shift-left2-text" x="472" y="122" font-size="10px">left 2</text>
+                        <path class="J1 J2" d="M 505 114 926 114 926 141 950 141"></path>
+                        <circle class="R1 R2 R3 I1 I2 I3 I4 J1 J2" cx="380" cy="518" r="3"></circle>    
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 380 518 360 518 360 578 676 578 676 522 692 522"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 Branch-mux-out" d="M 910 166 950 166"></path>
+                        <path class="J2 Jal-pc+4" d="M 386 158 386 66 1052 66 1052 216 978 216 978 424 988 424"></path>
+                        <circle class="J2 Jal-pc+4" cx="386" cy="158" r="3"></circle>    
+                        //pc adder
+                        <path class="pc-adder" d="M 306 106 306 140 320 154 306 164 306 200 350 176 350 129 Z"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 286 182 305 182"></path>
+                        <text class="pc-adder-text" x="272" y="185" font-size="12px">4</text>
+                        <text class="pc-adder-text" x="323" y="156" font-size="9px">adder</text>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2" d="M 351 158 430 158"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 430 158 682 158 682 128 845 128 845 140 886 140"></path>
+                        <circle class="J1 J2" cx="430" cy="158" r="3"></circle>    
+                        <text class="pc+4-text" x="565" y="136" font-size="11px">PC+4 [31:28]</text>
+                        <text class="jump-address-text" x="535" y="108" font-size="11px">Jump address [31:0]</text>
+                        <path class="J1 J2" d="M 430 158 430 142 555 142 555 114"></path>
+                        <circle class="I1 I2 I3 I4" cx="682" cy="147" r="3"></circle>    
+                        <path class="I4" d="M 684 147 736 147"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 470 424 480 424 480 410 488 410"></path>
+                        <path class="J2" d="M 480 450 480 434 488 434"></path>
+                        <text class="ra" x="473" y="462" font-size="12px">31</text>
+                        //imm adder
+                        <path class="imm-adder" d="M 736 135 736 168 755 180 736 194 736 228 815 206 815 158 Z"></path>
+                        <text class="imm-addder-text" x="760" y="184" font-size="13px">adder</text>
+                        //Jump mux
+                        <path class="Jump-mux" d="M 950 174 950 136 Q 950 125 961 125 Q 972 125 972 136 L 972 174 Q 972 182 961 182 Q 950 182 950 174"></path>
+                        <text class="Jump-mux-0" x="957" y="146">1</text>
+                        <text class="Jump-mux-1" x="957" y="170">0</text>
+                        //RegDst mux
+                        <path class="RegDst-mux" d="M 448 444 448 406 Q 448 395 459 395 Q 470 395 470 406 L 470 444 Q 470 452 459 452 Q 448 452 448 444"></path>
+                        <text class="RegDst-mux-0" x="455" y="416">0</text>
+                        <text class="RegDst-mux-1" x="455" y="440">1</text>
+                        //Jal mux
+                        <path class="Jal-mux" d="M 488 444 488 406 Q 488 395 499 395 Q 510 395 510 406 L 510 444 Q 510 452 499 452 Q 488 452 488 444"></path>
+                        <text class="Jal-mux-0" x="495" y="416">0</text>
+                        <text class="Jal-mux-1" x="495" y="440">1</text>
+                        //Branch mux
+                        <path class="Branch-mux" d="M 886 174 886 136 Q 886 125 897 125 Q 908 125 908 136 L 908 174 Q 908 182 897 182 Q 886 182 886 174"></path>
+                        <text class="Branch-mux-0" x="893" y="146">0</text>
+                        <text class="Branch-mux-1" x="893" y="170">1</text>
+                        //Jr mux
+                        <path class="mux" d="M 988 174 988 136 Q 988 125 999 125 Q 1010 125 1010 136 L 1010 174 Q 1010 182 999 182 Q 988 182 988 174"></path>
+                        <text class="mux 0" x="995" y="146">0</text>
+                        <text class="mux 1" x="995" y="170">1</text>
+                        //ALUSrc mux
+                        <path class="ALUSrc-mux" d="M 682 458 682 420 Q 682 409 693 409 Q 704 409 704 420 L 704 458 Q 704 466 693 466 Q 682 466 682 458"></path>
+                        <text class="ALUSrc-mux-0" x="689" y="430">0</text>
+                        <text class="ALUSrc-mux-1" x="689" y="454">1</text>
+                        //MemToReg
+                        <path class="MemToReg-mux" d="M 950 456 950 418 Q 950 407 961 407 Q 972 407 972 418 L 972 456 Q 972 464 961 464 Q 950 464 950 456"></path>
+                        <text class="MemToReg-mux-0" x="957" y="428">0</text>
+                        <text class="MemToReg-mux-1" x="957" y="452">1</text>
+                        //Jal mux
+                        <path class="Jal-mux" d="M 988 456 988 418 Q 988 407 999 407 Q 1010 407 1010 418 L 1010 456 Q 1010 464 999 464 Q 988 464 988 456"></path>
+                        <text class="Jal-mux-0" x="995" y="452">0</text>
+                        <text class="Jal-mux-1" x="995" y="428">1</text>
+                        //register file
+                        <path class="R1 R2 R3 I1 I2 I3 I4" d="M 510 424 528 424"></path>
+                        <path class="register-file" d="M 528 338 528 475 641 475 641 338 Z"></path>
+                        <text class="contoller-text" x="550" y="407" font-size="18px">register file</text>
+                        <text class="contoller-text" x="532" y="360" font-size="12px">R1</text>
+                        <text class="contoller-text" x="532" y="392" font-size="12px">R2</text>
+                        <text class="contoller-text" x="532" y="428" font-size="12px">W</text>
+                        <text class="contoller-text" x="532" y="458" font-size="12px">write data</text>
+                        <text class="contoller-text" x="610" y="362" font-size="10px">read</text>
+                        <text class="contoller-text" x="610" y="374" font-size="10px">data 1</text>
+                        <text class="contoller-text" x="610" y="427" font-size="10px">read</text>
+                        <text class="contoller-text" x="610" y="439" font-size="10px">data 2</text>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 read-data-1" d="M 642 373 724 373"></path>
+                        <path class="R1 R2 read-data-1" d="M 642 419 681 419"></path>
+                        <path class="I4 read-data-2" d="M 650 419 650 480 828 480"></path>
+                        <circle class="I4 read-data-2" cx="650" cy="419" r="3"></circle>
+                    //controller
+                        <ellipse class="controller" cx="520" cy="262" rx="32" ry="70" />
+                        <text class="contoller-text" x="495" y="263" font-size="12px">Controller</text>
+                    //sign extend
+                        <path class="sgn-extd" d="M 528 195 550 195 550 186 412 186 412 214 186 214 186 564 595 564 595 548"></path>
+                        <text class="sgn-extd-text" x="450" y="198" font-size="10px">sgn-extd</text>
+                        <ellipse class="sign-extend" cx="594" cy="514" rx="29" ry="34" />
+                        <text class="sign-extend-text" x="582" y="512" font-size="12px">sign</text>
+                        <text class="sign-extend-text" x="578" y="524" font-size="12px">extend</text>
+                        <path class="I1 I2 I3 I4 sign-extend-out" d="M 624 518 665 518 665 454 681 454"></path>
+                        <path class="I4 sign-extend-out" d="M 665 454 665 212 677 212"></path>
+                        <circle class="I1 I2 I3 I4 sign-extend-out" cx="665" cy="454" r="3"></circle>    
+                        <ellipse class="shift-left2" cx="699" cy="212" rx="22" ry="22" />
+                        <text class="shift-left2-text" x="690" y="208" font-size="10px">shift</text>
+                        <text class="shift-left2-text" x="688" y="218" font-size="10px">left 2</text>
+                        <path class="I4 Branch-offset" d="M 722 212 735 212"></path>
+                        <path class="I4 Branch-address" d="M 816 180 854 180 854 164 885 164"></path>
+                        //
+                        <path class="Jal" d="M 538 205 574 205 574 178 390 178 390 603 999 603 999 464"></path>
+                        <circle class="Jal" cx="390" cy="475" r="3"></circle>    
+                        <path class="Jal" d="M 390 475 500 475 500 452"></path>
+                        <text class="Jal-text" x="560" y="201" font-size="10px">Jal</text>
+                        //
+                        <path class="RegDst" d="M 544 215 582 215 582 168 370 168 370 464 460 464 460 451"></path>
+                        <text class="RegDst-text" x="584" y="200" font-size="9px">RegDst</text>
+                        //
+                        <path class="Jr" d="M 546 223 622 223 622 180 644 180 644 78 999 78 999 126"></path>
+                        <text class="Jr-text" x="612" y="218" font-size="10px">Jr</text>
+                        //
+                        <path class="Jump" d="M 548 232 656 232 656 102 961 102 961 126"></path>
+                        <text class="Jump-text" x="630" y="226" font-size="9px">Jump</text>
+                        //
+                        <path class="Branch" d="M 550 248 800 248 800 224 824 224"></path>
+                        <text class="Branch-text" x="610" y="244" font-size="8px">Branch</text>
+                        <path class="and" d="M 824 212 824 248 830 248 Q 858 250 858 230 Q 858 212 830 212 Z"></path>
+                        //
+                        <path class="MemRead" d="M 552 261 1060 261 1060 522 872 522 872 502"></path>
+                        <text class="MemRead-text" x="610" y="259" font-size="8px">MemRead</text>
+                        //
+                        <path class="memtoReg" d="M 552 276 961 276 961 406"></path>
+                        <text class="memtoReg-text" x="610" y="274" font-size="8px">MemtoReg</text>         
+                        //
+                        <path class="ALUOp" d="M 550 290 656 290 656 586 720 586 720 558"></path>
+                        <text class="ALUOp-text" x="610" y="288" font-size="8px">ALUOp</text>
+                        //
+                        <path class="MemWrite" d="M 546 302 874 302 874 384 "></path>
+                        <text class="MemWrite-text" x="610" y="300" font-size="8px">MemWrite</text>
+                        //
+                        <path class="ALUSrc" d="M 541 316 693 316 693 410 "></path>
+                        <text class="ALUSrc-text" x="610" y="314" font-size="8px">ALUSrc</text>
+                        //
+                        <path class="RegWrite" d="M 532 327 584 327 584 339 "></path>
+                        <text class="RegWrite-text" x="588" y="330" font-size="10px">RegWrite</text>
+                        //
+                        //ALU Control
+                        <ellipse class="ALU-control" cx="720" cy="524" rx="29" ry="34" />
+                        <text class="ALU-control-text" x="708" y="521" font-size="12px">ALU</text>
+                        <text class="ALU-control-text" x="701" y="533" font-size="12px">control</text>
+                        <path class="R1 R2 I1 I2 I3 I4 ALU-control-signal" d="M 750 522 764 522 764 440"></path>
+                    //ALU
+                        <path class="R1 R2 I1 I2 I3 I4 ALU-in-2" d="M 705 436 724 436 "></path>
+                        <path class="ALU" d="M 724 363 802 382 802 430 724 452 724 420 740 406 724 392 Z "></path>
+                        <text class="RegWrite-text" x="752" y="412" font-size="14px">ALU</text>
+                        <path class="R1 R2 I1 I3 I4 ALU-out" d="M 802 416 828 416 "></path>
+                        <path class="R1 R2 I1 ALU-out" d="M 812 416 812 512 940 512 940 450 949 450"></path>
+                        <circle class="R1 R2 I1 I3 I4" cx="812" cy="416" r="3"></circle>
+                        <path class="I4 ALU-zero-out" d="M 802 392 814 392 814 238 823 238"></path>
+                        <path class="I4 and-out" d="M 859 231 897 231 897 182"></path>
+                    //data memory
+                    <path class="Data-memory" d="M 828 382 828 503 925 503 925 382 Z"></path>
+                        <text class="Data-memory-text" x="880" y="470" font-size="14px">Data</text>
+                        <text class="Data-memory-text" x="870" y="486" font-size="14px">Memory</text>
+                        <text class="Data-memory-text" x="896" y="416" font-size="10px">Read</text>
+                        <text class="Data-memory-text" x="897" y="426" font-size="10px">data</text>
+                        <text class="Data-memory-text" x="834" y="420" font-size="12px">Address</text>
+                        <text class="Data-memory-text" x="834" y="476" font-size="10px">Write</text>
+                        <text class="Data-memory-text" x="835" y="486" font-size="10px">data</text>
+                        <path class="I3 Date-memory-out" d="M 926 420 949 420 "></path>
+                        <path class="R1 R2 I1 I3 MemtoReg-mux-out" d="M 973 436 980 436 980 446 986 446"></path>
+                        <path class="R1 R2 I1 I3 J2 Jal-mux-out" d="M 1011 436 1024 436 1024 592 515 592 515 456 528 456"></path>
+                        <path class="R1 R2 R3 I1 I2 I3 I4 J1 J2 Jump-mux-out" d="M 972 152 980 152 980 140 988 140"></path>
+                        <path class="R3 Jr-address" d="M 675 374 675 340 910 340 910 200 980 200 980 164 989 164"></path>
+                        <circle class="R3" cx="675" cy="373" r="3"></circle>
+                        //indicator
+                        <path style="stroke:#009000" d="M 107 40 139 40"></path>
+                        <text x="141" y="43" font-size="8px">R type Bus</text>
+                        <path style="stroke:#fbdd00" d="M 107 48 139 48"></path>
+                        <text x="141" y="51" font-size="8px">I type Bus</text>
+                        <path style="stroke:#80a" d="M 107 56 139 56"></path>
+                        <text x="141" y="59" font-size="8px">J type Bus</text>
+                        <path style="stroke:#26f" d="M 107 64 139 64"></path>
+                        <text x="141" y="67" font-size="8px">1</text>
+                        <path style="stroke:#e83030" d="M 107 72 139 72"></path>
+                        <text x="141" y="75" font-size="8px">0</text>
+                        <path style="stroke:#888" d="M 107 80 139 80"></path>
+                        <text x="141" y="83" font-size="8px">x</text>
+                        <path style="stroke:#000" d="M 107 88 135 88"></path>
+                        <text x="137" y="91" font-size="8px">Buses that we don't</text>
+                        <text x="105" y="99" font-size="8px">care about at this instruction</text>
+                        //
+                    </svg>
+            </div>
+        </div>
+        <script src="./JS/Assembler.js"></script>
+        <script src="./JS/Utilities.js"></script>
+        <script src="./JS/data.js"></script>
+        <script src="./JS/main.js"></script>
+    </body>
+</html>
